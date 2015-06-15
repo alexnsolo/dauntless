@@ -1,0 +1,27 @@
+{
+  "name": "dauntless",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.coffee",
+  "dependencies": {
+    "blessed": "^0.1.60",
+    "blessed-contrib": "^2.0.5",
+    "lodash": "^3.9.3"
+  },
+  "devDependencies": {
+    "coffee-script": "^1.9.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/civilframe/dauntless.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/civilframe/dauntless/issues"
+  },
+  "homepage": "https://github.com/civilframe/dauntless"
+}
