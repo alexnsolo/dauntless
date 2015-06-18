@@ -15,11 +15,11 @@ contrib = require('blessed-contrib')
 screen = blessed.screen()
 grid = new contrib.grid({rows: 24, cols: 24, screen: screen})
 
-refresh = []
+updates = []
 
 # 30 FPS
 setInterval( ->
-	refresh.forEach (callback) -> callback.apply()
+	updates.forEach (callback) -> callback.apply()
 	screen.render()
 , 33)
 
@@ -29,39 +29,53 @@ screen.key ['C-c'], (ch, key) -> process.exit(0)
 # = Setup Game
 # ==================================================================
 
-Game = require('./lib/game.coffee')
+Game = require('./lib/game')
 
 game = new Game()
 
+# == Header =========================================
+time = grid.set(0, 0, 2, 8, blessed.text, {
+	label: 'Time'
+	padding: {left: 1}
+})
+
+location = grid.set(0, 8, 2, 8, blessed.text, {
+	label: 'Location'
+	padding: {left: 1}
+})
+
+updates.push ->
+	time.content = game.describeTime()
+	location.content = game.describeLocation()
 
 # == Ship Info ====================================
-ship_info = grid.set(0, 16, 4, 8, contrib.table, { 
+ship_info = grid.set(0, 16, 12, 8, contrib.table, { 
 	label: 'Ship Info'
 	columnSpacing: 1
 	columnWidth: [15, 18]
 })
 
-refresh.push ->
+updates.push ->
 	ship_info.setData(
 		headers: ['Attribute', 'Value']
 		data: [
 			['',''] #wtf
-			['Name', game['playerShip']['name']]
-			['Crew Count', game['playerShip']['crew_count']]
-			['Shield', game['playerShip'].describeShieldStrength()]
-			['Hull', game['playerShip'].describeHullIntegrity()]
-			['Capacitor', game['playerShip'].describeCapacitorCharge()]
+			['Name', game['player_ship']['name']]
+			['Crew Count', game['player_ship']['crew_count']]
+			['Shield', game['player_ship'].describeShieldStrength()]
+			['Hull', game['player_ship'].describeHullIntegrity()]
+			['Capacitor', game['player_ship'].describeCapacitorCharge()]
 		]
 	)
 
 
 # == Reports Log ==================================
-reports_log = grid.set(0, 0, 16, 16, blessed.log, {
+reports_log = grid.set(2, 0, 14, 16, blessed.log, {
 	label: 'Reports'
 	padding: {left: 1}
 })
 
-refresh.push ->
+updates.push ->
 	reports_log.setContent(game['reports_log'].join('\n'))
 
 
@@ -71,7 +85,7 @@ console_log = grid.set(16, 0, 6, 16, blessed.log, {
 	padding: {left: 1}
 })
 
-refresh.push ->
+updates.push ->
 	console_log.setContent(game['console_log'].join('\n'))
 
 

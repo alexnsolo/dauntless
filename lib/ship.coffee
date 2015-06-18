@@ -1,3 +1,4 @@
+_ = require('lodash')
 events = require('pubsub-js')
 
 module.exports = class Ship
@@ -7,6 +8,15 @@ module.exports = class Ship
 	'shield_strength': {'current': 0, 'base': 0}
 	'hull_integrity': {'current': 0, 'base': 0}
 	'capacitor_charge': {'current': 0, 'base': 0}
+
+	@generatePlayer: ->
+		player_ship = new Ship()
+		player_ship['name'] = "Dauntless"
+		player_ship['crew_count'] = _.random(50, 120)
+		player_ship['shield_strength']['base'] = player_ship['shield_strength']['current'] = _.random(50, 70) * 10
+		player_ship['hull_integrity']['base'] = player_ship['hull_integrity']['current'] = _.random(10, 15) * 100
+		player_ship['capacitor_charge']['base'] = player_ship['capacitor_charge']['current'] = _.random(20, 25) * 100
+		return player_ship
 
 	constructor: ->
 
