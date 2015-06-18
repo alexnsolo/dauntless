@@ -1,4 +1,5 @@
 _ = require('lodash')
+events = require('pubsub-js')
 Ship = require('./ship.coffee')
 
 module.exports = class Game
@@ -18,6 +19,11 @@ module.exports = class Game
 		@logToReports("The #{@['playerShip']['name']} is operational.")
 		@logToConsole("SYSTEM awaiting commands.")
 
+		events.subscribe('SHIP_DESTROYED', (msg, ship) =>
+			if ship is @playerShip
+				@logToReports("The #{@['playerShip']['name']} has been destroyed.")
+		)
+
 	logToConsole: (message) ->
 		@console_log.push(message)
 
@@ -26,11 +32,21 @@ module.exports = class Game
 
 	processCommand: (command) ->
 		return if _.isEmpty(command)
+
 		@logToConsole("-> #{command}")
+
 		switch command
 			when 'quit'
 				@logToConsole('Suspending SYSTEM...')
 				@saveAndQuit()
+
+		if @playerShip['is_destroyed']
+			@logToConsole('ERROR.')
+			return
+
+		switch command
+			when '!takedamage'
+				@playerShip.takeDamage(5000)
 			else
 				@logToConsole('Unrecognized command!')
 
@@ -38,4 +54,4 @@ module.exports = class Game
 		# TODO: save
 		setTimeout( ->
 			process.exit(0)
-		, 250)
+		, 500)

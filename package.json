@@ -6,7 +6,10 @@
   "dependencies": {
     "blessed": "^0.1.60",
     "blessed-contrib": "^2.0.5",
-    "lodash": "^3.9.3"
+    "install": "^0.1.8",
+    "lodash": "^3.9.3",
+    "npm": "^2.11.2",
+    "pubsub-js": "^1.5.2"
   },
   "devDependencies": {
     "coffee-script": "^1.9.3"
