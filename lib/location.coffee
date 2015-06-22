@@ -1,15 +1,18 @@
 _ = require('lodash')
+Ship = require('./ship')
 
 module.exports = class Location
 
 	@TYPE: {'Space', 'Warp', 'Asteroid Field', 'Planet', 'Moon', 'Sun', 'Nebula'}
 
-	name: ''
-	type: null
+	'name': ''
+	'type': null
+	'ships': []
 
 	@warp:
-		name: 'Warpspace'
-		type: Location.TYPE['Warp']
+		'name': 'Warpspace'
+		'type': Location.TYPE['Warp']
+		'ships': []
 
 	@generate: ->
 		name = ''
@@ -20,7 +23,12 @@ module.exports = class Location
 		name += _.sample(['1', '3', '6', '9'])
 		name += _.sample(['2', '8', '7', '5'])
 
+		ships = []
+		enemy =  Ship.generateEnemy()
+		ships.push(enemy)
+
 		location = new Location()
 		location['name'] = name
 		location['type'] = _.sample(_.reject(_.keys(Location.TYPE), 'Warp', 'Space'))
+		location['ships'] = ships
 		return location

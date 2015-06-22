@@ -49,7 +49,7 @@ updates.push ->
 	location.content = game.describeLocation()
 
 # == Ship Info ====================================
-ship_info = grid.set(0, 16, 12, 8, contrib.table, { 
+ship_info = grid.set(0, 16, 8, 8, contrib.table, { 
 	label: 'Ship Info'
 	columnSpacing: 1
 	columnWidth: [15, 18]
@@ -68,6 +68,24 @@ updates.push ->
 		]
 	)
 
+
+# == Sensors ====================================
+sensors = grid.set(8, 16, 16, 8, contrib.table, { 
+	label: 'Sensors'
+	columnSpacing: 1
+	columnWidth: [13, 30]
+})
+
+updates.push ->
+	data = []
+	data.push(['','']) #wtf
+	game['location']['ships'].forEach (ship) ->
+		data.push([ship['signature'], ship['name']])
+
+	sensors.setData(
+		headers: ['Signature', 'Name']
+		data: data
+	)
 
 # == Reports Log ==================================
 reports_log = grid.set(2, 0, 14, 16, blessed.log, {
