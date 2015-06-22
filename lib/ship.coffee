@@ -9,6 +9,7 @@ module.exports = class Ship
 	'shield_strength': {'current': 0, 'base': 0}
 	'hull_integrity': {'current': 0, 'base': 0}
 	'capacitor_charge': {'current': 0, 'base': 0}
+	'target': null
 
 	@generatePlayer: ->
 		player_ship = new Ship()
