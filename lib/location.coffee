@@ -29,6 +29,6 @@ module.exports = class Location
 
 		location = new Location()
 		location['name'] = name
-		location['type'] = _.sample(_.reject(_.keys(Location.TYPE), 'Warp', 'Space'))
+		location['type'] = _.sample(['Asteroid Field', 'Planet', 'Moon', 'Sun', 'Nebula'])
 		location['ships'] = ships
 		return location

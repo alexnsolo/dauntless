@@ -65,6 +65,7 @@ updates.push ->
 			['Shield', game['player_ship'].describeShieldStrength()]
 			['Hull', game['player_ship'].describeHullIntegrity()]
 			['Capacitor', game['player_ship'].describeCapacitorCharge()]
+			['Sensors', game['player_ship'].describeSensorCalibration()]
 		]
 	)
 
